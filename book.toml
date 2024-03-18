@@ -1,0 +1,6 @@
+[book]
+authors = ["wuji"]
+language = "en"
+multilingual = false
+src = "src"
+title = "generalize"

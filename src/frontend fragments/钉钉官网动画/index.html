@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .main {
+      height: 400vh;
+    }
+
+    .header {
+      height: 100vh;
+    }
+
+    .playground {
+      height: 200vh;
+      background: #000;
+      position: relative;
+    }
+
+    .animation {
+      height: 100vh;
+      position: sticky;
+      top: 0;
+    }
+
+    .list {
+      width: 480px;
+      height: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: center;
+      align-content: center;
+      /* padding: 0 25%; */
+      margin: auto;
+    }
+
+    .item {
+      width: 40px;
+      height: 40px;
+      border-radius: 5px;
+      background: red;
+      margin: 40px;
+    }
+
+    .footer {
+      height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <div class="header">header</div>
+    <div class="playground" id="playground">
+      <div class="animation" id="animation">
+        <div class="list">
+          <div data-order="0" class="item"></div>
+          <div data-order="1" class="item"></div>
+          <div data-order="1" class="item"></div>
+          <div data-order="0" class="item"></div>
+          <div data-order="0" class="item"></div>
+          <div data-order="1" class="item"></div>
+          <div data-order="1" class="item"></div>
+          <div data-order="0" class="item"></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">footer</div>
+  </div>
+
+  <script>
+    const playgroundEL = document.querySelector('#playground')
+    const animationEL = document.querySelector('#animation')
+    const itemELs = document.querySelectorAll('.item')
+
+
+    function createAnimation(scrollStart, scrollEnd, start, end) {
+      return function(scroll) {
+        if (scroll <= scrollStart) return start
+        if (scroll >= scrollEnd) return end
+
+        return start + (end - start) * (scroll - scrollStart) / (scrollEnd - scrollStart)
+      }
+    }
+
+    function getDomAnimation(dom, scrollStart, scrollEnd) {
+      const offset = dom.dataset.order * 600
+      const opcityAnimation = createAnimation(scrollStart + offset, scrollEnd, 0, 1)
+      const scaleAnimation = createAnimation(scrollStart + offset, scrollEnd, 0, 1)
+
+      const opacity = function(scroll) {
+        return opcityAnimation(scroll)
+      }
+      const xAnimation = createAnimation(
+        scrollStart,
+        scrollEnd,
+        playgroundEL.clientWidth / 2 - dom.offsetLeft - dom.clientWidth / 2,
+        0
+      )
+
+      const yAnimation = createAnimation(
+        scrollStart,
+        scrollEnd,
+        playgroundEL.clientHeight / 4 - dom.offsetTop - dom.clientHeight / 2,
+        0
+      )
+
+      const transform = function(scroll) {
+        return `translate(${xAnimation(scroll)}px, ${yAnimation(scroll)}px) scale(${scaleAnimation(scroll)})`
+      }
+
+      return {
+        opacity,
+        transform
+      }
+    }
+
+    const styleMap = new Map()
+
+    function updateMap() {
+      const playgroundRect = playgroundEL.getBoundingClientRect()
+      const scrollStart = playgroundRect.top + window.scrollY
+      const scrollEnd = playgroundRect.bottom + window.scrollY - window.innerHeight
+
+      for (const item of itemELs) {
+        styleMap.set(item, getDomAnimation(item, scrollStart, scrollEnd))
+      }
+    }
+
+    updateMap()
+
+    function updateStyles() {
+      const scroll = window.scrollY
+      
+      for (let [dom, value] of styleMap) {
+        for (const cssProp in value) {
+          // console.log(cssProp)
+          dom.style[cssProp] = value[cssProp](scroll)
+        }
+      }
+    }
+
+    window.addEventListener('scroll', updateStyles)
+  </script>
+</body>
+
+</html>
