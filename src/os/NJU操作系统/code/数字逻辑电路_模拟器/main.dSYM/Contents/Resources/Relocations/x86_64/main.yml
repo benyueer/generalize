@@ -1,0 +1,11 @@
+---
+triple:          'x86_64-apple-darwin'
+binary-path:     "/Users/mac/Desktop/pro/generalize/src/os/NJU操作系统/code/数字逻辑电路_模拟器/main"
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100000EC0, symSize: 0xC4 }
+  - { offsetInCU: 0x33, offset: 0x33, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100000EC0, symSize: 0xC4 }
+  - { offsetInCU: 0x58, offset: 0x58, size: 0x8, addend: 0x0, symName: _main.X, symObjAddr: 0x5DC, symBinAddr: 0x100002000, symSize: 0x0 }
+  - { offsetInCU: 0x6D, offset: 0x6D, size: 0x8, addend: 0x0, symName: _main.X1, symObjAddr: 0x5E0, symBinAddr: 0x100002004, symSize: 0x0 }
+  - { offsetInCU: 0x82, offset: 0x82, size: 0x8, addend: 0x0, symName: _main.Y, symObjAddr: 0x5E4, symBinAddr: 0x100002008, symSize: 0x0 }
+  - { offsetInCU: 0x97, offset: 0x97, size: 0x8, addend: 0x0, symName: _main.Y1, symObjAddr: 0x5E8, symBinAddr: 0x10000200C, symSize: 0x0 }
+...

@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/mac/Desktop/pro/generalize/src/os/NJU操作系统/code/数字逻辑电路_模拟器",
+      "program": "/Users/mac/Desktop/pro/generalize/src/os/NJU操作系统/code/数字逻辑电路_模拟器/build/Debug/outDebug"
+    }
+  ]
+}
